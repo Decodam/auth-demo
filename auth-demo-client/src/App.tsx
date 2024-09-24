@@ -3,7 +3,7 @@ import { authConfigManager, SessionProvider, signIn, signOut, useSession } from 
 
 
 authConfigManager.setConfig({
-  baseUrl: process.env.API_URL || 'http://localhost:8787',
+  baseUrl: 'https://auth-demo-backend.arghyamondal-work.workers.dev', //'http://localhost:8787',
   credentials:'include' //needed  for cross domain setup
 });
 
