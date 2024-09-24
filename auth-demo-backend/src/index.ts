@@ -1,11 +1,11 @@
-import { Hono, Context } from 'hono'
-import { authHandler, initAuthConfig, verifyAuth, type AuthConfig } from "@hono/auth-js"
-import GitHub from "@auth/core/providers/github"
+import { Hono } from 'hono'
+import { authHandler, initAuthConfig, verifyAuth } from "@hono/auth-js"
 import { cors } from 'hono/cors'
-import { Bindings } from 'hono/types'
+import getAuthConfig from './lib/auth'
 
 const app = new Hono<{Bindings: {
-  CLIENT_URL:string
+  CLIENT_URL:string,
+  DB: D1Database;
 }}>()
 
 app.use(
@@ -18,10 +18,11 @@ app.use(
   })
 )
 
+// Auth handler setup
 app.use("*", initAuthConfig(getAuthConfig))
-
 app.use("/api/auth/*", authHandler())
 
+// api routes
 app.use('/api/*', verifyAuth())
 
 app.get('/api/protected', (c) => {
@@ -33,16 +34,6 @@ app.get('/', (c) => {
   return c.redirect(c.env.CLIENT_URL)
 })
 
-function getAuthConfig(c: Context): AuthConfig {
-  return {
-    secret: c.env.AUTH_SECRET,
-    providers: [
-      GitHub({
-        clientId: c.env.GITHUB_CLIENT_ID,
-        clientSecret: c.env.GITHUB_CLIENT_SECRET
-      }),
-    ]
-  }
-}
+
 
 export default app
