@@ -6,7 +6,7 @@
     "db:gen": "drizzle-kit generate",
     "db:up": "drizzle-kit up",
     "studio:dev": "drizzle-kit studio",
-		"studio:prd": "cross-env NODE_ENV=production drizzle-kit studio"
+    "studio:prd": "cross-env NODE_ENV=production drizzle-kit studio"
   },
   "dependencies": {
     "@auth/core": "^0.35.0",
