@@ -3,7 +3,7 @@ import { authConfigManager, SessionProvider, signIn, signOut, useSession } from 
 
 
 authConfigManager.setConfig({
-  baseUrl: 'http://localhost:8787',
+  baseUrl: process.env.API_URL || 'http://localhost:8787',
   credentials:'include' //needed  for cross domain setup
 });
 
